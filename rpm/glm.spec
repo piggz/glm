@@ -66,7 +66,7 @@ This package provides the documentation for GLM library.
 %patch1 -p1
 
 %build
-cmake
+cmake .
 make %{?jobs:-j%jobs}
 
 %install
