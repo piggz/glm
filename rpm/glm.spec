@@ -17,14 +17,15 @@
 
 
 Name:           glm
-Version:        0.9.9.5
+Version:        0.9.9.6
 Release:        0
 Summary:        Header only C++ mathematics library for graphics
 License:        MIT AND GPL-2.0-only
 Group:          Development/Libraries/C and C++
 Url:            https://glm.g-truc.net/
 Source:         https://github.com/g-truc/%{name}/archive/%{version}.tar.gz#/%{name}-%{version}.tar.gz
-Patch1:         glm-cmake-config.patch
+Patch0:         glm-install.patch
+Patch1:         glm-noarch.patch
 BuildRequires:  cmake
 BuildRequires:  fdupes
 BuildRequires:  gcc-c++
@@ -61,15 +62,15 @@ This package provides the documentation for GLM library.
 
 %prep
 %setup -q -n %{name}-%{version}/glm
+%patch0 -p1
+%patch1 -p1
 
 %build
-%cmake \
-  -DCMAKE_CXX_FLAGS="%{optflags} -fPIC -fno-strict-aliasing" \
-  -DGLM_TEST_ENABLE=ON
+cmake
 make %{?jobs:-j%jobs}
 
 %install
-cmake --install .
+make install DESTDIR=$RPM_BUILD_ROOT
 
 %files devel
 %{_includedir}/glm/
