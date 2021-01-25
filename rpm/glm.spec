@@ -66,7 +66,7 @@ This package provides the documentation for GLM library.
 %patch1 -p1
 
 %build
-cmake .
+cmake -DCMAKE_INSTALL_PREFIX:PATH=%{_prefix} .
 make %{?jobs:-j%jobs}
 
 %install
